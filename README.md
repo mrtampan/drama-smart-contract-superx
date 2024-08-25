@@ -4,25 +4,25 @@ DramaSocmed adalah Smart Contract Ethereum yang memungkinkan pengguna untuk mena
 
 ## Fitur
 
--  **Menambah Drama Baru**: Pengguna dapat menambahkan drama baru dengan kode dan deskripsi.
--  **Menambah Topik pada Drama**: Pengguna dapat menambahkan topik terkait pada drama yang ada dengan tautan.
--  **Menghapus Topik**: Pengguna dapat menghapus topik yang mereka buat.
--  **Menghancurkan Contract**: Pemilik contract dapat menghancurkan contract dan mengirim sisa ether kembali kepada pemilik.
+- **Menambah Drama Baru**: Pengguna dapat menambahkan drama baru dengan kode dan deskripsi.
+- **Menambah Topik pada Drama**: Pengguna dapat menambahkan topik terkait pada drama yang ada dengan tautan.
+- **Menghapus Topik**: Pengguna dapat menghapus topik yang mereka buat.
+- **Menghancurkan Contract**: Pemilik contract dapat menghancurkan contract dan mengirim sisa ether kembali kepada pemilik.
 
 ### Functions
 
--  `tambahDramaBaru(string memory kode, string memory deskripsi) external returns (uint256)`: Menambahkan drama baru dan mengembalikan ID drama baru.
--  `tambahTopikDrama(string memory link, uint256 idDrama) external returns (uint256)`: Menambahkan topik baru ke drama yang ada dan mengembalikan ID topik baru.
--  `hapusTopikDrama(uint256 idDrama, uint256 idTopik) external returns (bool)`: Menghapus topik dari drama jika pemanggil adalah pembuat topik.
--  `destroyContract() public onlyOwner`: Menghancurkan contract dan mengirim sisa ether ke pemilik contract.
+- `tambahDramaBaru(string memory kode, string memory deskripsi) external returns (uint256)`: Menambahkan drama baru dan mengembalikan ID drama baru.
+- `tambahTopikDrama(string memory link, uint256 idDrama) external returns (uint256)`: Menambahkan topik baru ke drama yang ada dan mengembalikan ID topik baru.
+- `hapusTopikDrama(uint256 idDrama, uint256 idTopik) external returns (bool)`: Menghapus topik dari drama jika pemanggil adalah pembuat topik.
+- `destroyContract() public onlyOwner`: Menghancurkan contract dan mengirim sisa ether ke pemilik contract.
 
 ## Instalasi dan Penggunaan
 
 ### Requirement
 
--  Node.js
--  Truffle
--  Ganache
+- Node.js
+- Truffle
+- Ganache
 
 ### Langkah-langkah
 
@@ -34,16 +34,35 @@ DramaSocmed adalah Smart Contract Ethereum yang memungkinkan pengguna untuk mena
    npm install
    ```
 
-3. Compile contract:
+3. Install truffle
+
+   ```sh
+   npm install -g truffle
+   ```
+
+4. Compile contract:
 
    ```sh
    npx truffle compile
    ```
 
-4. Deploy contract:
+5. Deploy contract:
 
    ```sh
    npx truffle migrate
+   ```
+
+### Jalankan Ganache CLI
+
+1. Install ganache
+
+   ```sh
+   npm install -g ganache-cli
+   ```
+
+2. Jalankan ganache
+   ```sh
+   ganache-cli
    ```
 
 ### Interaksi dengan Contract
@@ -59,12 +78,12 @@ truffle console
 ```js
 // Tambah drama baru
 DramaSocmed.deployed().then((instance) =>
-   instance.tambahDramaBaru("Kode123", "Deskripsi drama")
+  instance.tambahDramaBaru('Kode123', 'Deskripsi drama')
 );
 
 // Tambah topik baru ke drama dengan ID 1
 DramaSocmed.deployed().then((instance) =>
-   instance.tambahTopikDrama("http://linktopik.com", 1)
+  instance.tambahTopikDrama('http://linktopik.com', 1)
 );
 
 // Hapus topik dengan ID 0 dari drama dengan ID 1
@@ -72,6 +91,25 @@ DramaSocmed.deployed().then((instance) => instance.hapusTopikDrama(1, 0));
 
 // Hancurkan contract (hanya pemilik yang dapat melakukan ini)
 DramaSocmed.deployed().then((instance) => instance.destroyContract());
+```
+
+or jalankan secara promise
+
+```js
+// Inisialisasi instance
+const instance = await DramaSocmed.deployed();
+
+// Tambah drama baru
+await instance.tambahDramaBaru('Kode123', 'Deskripsi drama');
+
+// Tambah topik baru ke drama dengan ID 1
+await instance.tambahTopikDrama('http://linktopik.com', 1);
+
+// Hapus topik dengan ID 0 dari drama dengan ID 1
+await instance.hapusTopikDrama(1, 0);
+
+// Hancurkan contract (hanya pemilik yang dapat melakukan ini)
+await instance.destroyContract();
 ```
 
 ## Lisensi
